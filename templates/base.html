@@ -1,0 +1,10 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}Parking{% endblock %}
+
+{% block header %}
+{% import "bootstrap/fixes.html" as fixes %}
+
+    {{super()}}
+    {{fixes.ie8()}}
+{% endblock %}

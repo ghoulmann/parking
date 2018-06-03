@@ -6,7 +6,7 @@ from flask import Flask
 #from flask_bootstrap import Bootstrap
 #from flask_nav.elements import *
 from flask_nav import Nav
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, jsonify
 #from flask_nav import *
 #from flask_nav.elements import *
 from flask_bootstrap import Bootstrap
@@ -20,6 +20,7 @@ import wtforms as wtf
 import json
 import datetime
 import time
+
 
 
 
@@ -99,18 +100,18 @@ def create_app(test_config=None):
 
             for key, value in result.items():
                 if key != 'csrf_token':
-                    complete[key] = value
+                    if key != 'submit':
+                        complete[key] = value
             now = unicode(datetime.datetime.now())
             complete['timestamp'] = now
             application = json.dumps(complete)
-            print application
+            #print application
 
 
+            with open("data/output.json", "a") as record:
+                record.write(application)
 
-
-
-
-            return redirect(url_for('acknowledge'))
+            return render_template('ack.html')
         else:
             form = ApplicationForm()
             return render_template('application_form.html', title="Application", form=form, wtf=wtf)

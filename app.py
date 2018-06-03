@@ -6,7 +6,7 @@ from flask import Flask
 #from flask_bootstrap import Bootstrap
 #from flask_nav.elements import *
 from flask_nav import Nav
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
 #from flask_nav import *
 #from flask_nav.elements import *
 from flask_bootstrap import Bootstrap
@@ -17,6 +17,9 @@ from wtforms.validators import DataRequired
 from forms.forms import ApplicationForm
 from flask_wtf.csrf import CSRFProtect
 import wtforms as wtf
+import json
+import datetime
+import time
 
 
 
@@ -88,11 +91,33 @@ def create_app(test_config=None):
     def home():
         return render_template('index.html')
 
-    @app.route('/application')
+    @app.route('/application', methods=['GET', 'POST'])
     def application():
-        form = ApplicationForm()
+        complete = {}
+        if request.method == 'POST':
+            result = request.form
 
-        return render_template('application_form.html', title="Application", form=form, wtf=wtf)
+            for key, value in result.items():
+                if key != 'csrf_token':
+                    complete[key] = value
+            now = unicode(datetime.datetime.now())
+            complete['timestamp'] = now
+            application = json.dumps(complete)
+            print application
+
+
+
+
+
+
+            return redirect(url_for('acknowledge'))
+        else:
+            form = ApplicationForm()
+            return render_template('application_form.html', title="Application", form=form, wtf=wtf)
+
+    @app.route('/receipt')
+    def acknowledge():
+        return render_template('ack.html')
 
     #nav.init_app(app)
 

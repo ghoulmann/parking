@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField
 from wtforms import validators
 from wtforms.fields import html5 as more_fields
+from wtforms.widgets import TextArea
+from wtforms.widgets import HiddenInput
 
 
 
@@ -29,6 +31,7 @@ class ApplicationForm(FlaskForm):
     l_plate = StringField('License Plate')
     state = BooleanField('Registration State')
     consent = BooleanField('Parent/Guardian Written Consent')
+    grade = SelectField(choices=[(9,'9th'), (10,'10th'), (11, '11th'), (12, '12th')])
 
     # vehicle
     make = StringField('Vehicle Manufacturer')
@@ -37,6 +40,8 @@ class ApplicationForm(FlaskForm):
 
     # eligibility
     internship = BooleanField('Internship')
+    d_enrollment = BooleanField('Dual Enrollment')
+
     job = BooleanField('Weekday Work Hours')
     ath_carpool = BooleanField('Team Carpool Host')
     athlete = BooleanField('Seasonal Athlete')
@@ -45,6 +50,8 @@ class ApplicationForm(FlaskForm):
     media_production = BooleanField('Media Production')
     gpa = BooleanField('GPA Advantage')
     attendance = BooleanField('Attendance Advantage')
+    narrative = StringField('Explanation', widget=TextArea())
+    timestamp = DateTimeField('',widget=HiddenInput())
 
 
 

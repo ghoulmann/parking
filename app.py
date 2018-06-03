@@ -109,7 +109,7 @@ def create_app(test_config=None):
 
 
             with open("data/output.json", "a") as record:
-                record.write(application)
+                record.write(application + '\n\n')
 
             return render_template('ack.html')
         else:

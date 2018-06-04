@@ -12,22 +12,25 @@ def lot_details(used, *season, **ay):
     lot = {'capacity': capacity, 'assignments': assigned,'available_spots': remaining}
     return lot
 
-def donut(values, labels, *x, *y, title):
+def donut(data, labels, title):
     """returns div"""
     import plotly.plotly as py
     import plotly.graph_objs as go
 
     fig = {
         'data': [
-            'values': values,
+        {
+            'values': data,
             'labels': labels
-            ],
+            },
             'hole': 0.4,
             'hoverinfo': "label+percent+name",
             'type': 'pie'
+            }]
         'layout': {
             "title":title
+            'type':
         }
-    }
+        }}
 
     return = plotly.offline.plot(figure, include_plotlyjs=True, output_type='html')

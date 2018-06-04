@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
+import datetime
+import json
 import os
+import time
 
-from flask import Flask
+import wtforms as wtf
+from flask import Flask, jsonify, redirect, render_template, request, url_for
+#from flask_nav import *
+#from flask_nav.elements import *
+from flask_bootstrap import Bootstrap
 #from flask import url_for, render_template
 #from flask_bootstrap import Bootstrap
 #from flask_nav.elements import *
 from flask_nav import Nav
-from flask import Flask, render_template, url_for, request, redirect, jsonify
-#from flask_nav import *
-#from flask_nav.elements import *
-from flask_bootstrap import Bootstrap
-from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
+from flask_nav.elements import Link, Navbar, Separator, Subgroup, Text, View
 from flask_wtf import FlaskForm
+from flask_wtf.csrf import CSRFProtect
+from forms.forms import ApplicationForm
 from wtforms import *
 from wtforms.validators import DataRequired
-from forms.forms import ApplicationForm
-from flask_wtf.csrf import CSRFProtect
-import wtforms as wtf
-import json
-import datetime
-import time
-
-
 
 
 def create_app(test_config=None):
@@ -46,32 +43,26 @@ def create_app(test_config=None):
 
 
     # registers the "top" menubar
-    '''
+
     nav.register_element('top', Navbar(
-        View('Start', 'home')
-        #View('Our Mission', 'about'),
+        'Parking',
+        View('Home', 'home'),
+        View('Application', 'application'),
         Subgroup(
-            'Products',
-            View('Wg240-Series', 'products', product='wg240'),
-            View('Wg250-Series', 'products', product='wg250'),
-            Separator(),
-            Label('Discontinued Products'),
-            View('Wg10X', 'products', product='wg10x'),
+            'Admin'
+            #View('Wg240-Series', 'products', product='wg240'),
+            #View('Wg250-Series', 'products', product='wg250'),
+            #Separator(),
+            #Label('Discontinued Products'),
+            #View('Wg10X', 'products', product='wg10x'),
+
         ),
 
     ))
-    '''
 
-    '''
-    @nav.navigation()
-    def mynavbar():
 
-        return Navbar(
-            'Parking',
-        View('Home', '/'),
-        #View('Request', 'request')
-    )
-    '''
+
+
 
     '''
     if test_config is None:
@@ -120,7 +111,7 @@ def create_app(test_config=None):
     def acknowledge():
         return render_template('ack.html')
 
-    #nav.init_app(app)
+    nav.init_app(app)
 
     return app
 if __name__ == "__main__":

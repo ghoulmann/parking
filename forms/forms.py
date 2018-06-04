@@ -19,9 +19,7 @@ class ApplicationForm(FlaskForm):
 
 
     #identity
-    name_first = StringField('First Name', validators=[validators.DataRequired()])
-
-    name_last = StringField('Last Name', validators=[validators.DataRequired()])
+    full_name = StringField('Full Name', validators=[validators.DataRequired()])
 
     email = more_fields.EmailField('Email Address', validators=[validators.DataRequired(), validators.Email()])
 
@@ -50,7 +48,7 @@ class ApplicationForm(FlaskForm):
     media_production = BooleanField('Media Production')
     gpa = BooleanField('GPA Advantage')
     attendance = BooleanField('Attendance Advantage')
-    narrative = StringField('Explanation', widget=TextArea())
+    narrative = StringField('Explanation', widget=TextArea(), validators=[validators.DataRequired()])
     timestamp = DateTimeField('',widget=HiddenInput())
 
 

@@ -39,7 +39,7 @@ class ApplicationForm(FlaskForm):
     # eligibility
     internship = BooleanField('Internship')
     d_enrollment = BooleanField('Dual Enrollment')
-
+    service = BooleanField('Community Service')
     job = BooleanField('Weekday Work Hours')
     ath_carpool = BooleanField('Team Carpool Host')
     athlete = BooleanField('Seasonal Athlete')

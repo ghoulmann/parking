@@ -19,8 +19,8 @@ from flask_wtf.csrf import CSRFProtect
 from forms.forms import ApplicationForm
 from wtforms import *
 from wtforms.validators import DataRequired
-
-
+from lot.lot import Lot
+from application.application import Application
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -81,7 +81,8 @@ def create_app(test_config=None):
 
     @app.route('/')
     def home():
-        return render_template('index.html')
+        lot = Lot()
+        return render_template('index.html', object=lot)
 
     @app.route('/application', methods=['GET', 'POST'])
     def application():
@@ -101,8 +102,12 @@ def create_app(test_config=None):
 
             with open("data/output.json", "a") as record:
                 record.write(application + '\n\n')
+            app_obj = Application(request.form['full_name'])
+            app_obj.id = complete['full_name']
+            app_obj.grade = complete['grade']
+            app_obj.qualifier['internship'] = complete['internship']
 
-            return render_template('ack.html')
+            return render_template('ack.html', object=app_obj)
         else:
             form = ApplicationForm()
             return render_template('application_form.html', title="Application", form=form, wtf=wtf)

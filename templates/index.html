@@ -5,9 +5,15 @@
 {% block page_content %}
 
 <div class="container">
+  <div class="row">
   <h1>Parking</h1>
   <a type="button" class="btn btn-primary"  href="application">Apply</a>
-</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
 
+      {{ object.donut([80,20], ['Assigned', 'Available'], 'Example Lot Usage')|safe }}
+      
+    </div>
 {% endblock %}
 {% endblock %}

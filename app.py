@@ -4,6 +4,7 @@ import json
 import os
 import time
 
+
 import wtforms as wtf
 from flask import Flask, jsonify, redirect, render_template, request, url_for
 #from flask_nav import *
@@ -81,6 +82,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def home():
+
         lot = Lot()
         return render_template('index.html', object=lot)
 

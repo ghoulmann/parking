@@ -5,7 +5,7 @@
 class Lot():
 
     def __init__(self):
-        CAPACITY = 75
+        self.CAPACITY = 75
 
 
     def lot_details(self, used, *season, **ay):
@@ -32,4 +32,4 @@ class Lot():
                 }
             }
 
-        return plot(self.fig, include_plotlyjs=True, output_type='div')
+        return plot(fig, include_plotlyjs=True, output_type='div')

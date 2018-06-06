@@ -5,6 +5,13 @@ import random
 #    return ''.join(random.choice(chars) for _ in range(size))
 
 from random import randint
+
+def process_form_results(form_results, class_instance):
+    
+
+    for key, value in form_results.iteritems():
+        setattr(class_instance, key, value)
+
 class Application(str):
     def __init__(self, str):
         self.instances = []
@@ -73,10 +80,8 @@ class Application(str):
 
         else:
 	        self.scaled_score = multiplier
-        
+
         return self.scaled_score
 
     #def id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):
-    #     return ''.join(random.choice(chars) for _ in range(size))    
-     
-    
+    #     return ''.join(random.choice(chars) for _ in range(size))

@@ -5,6 +5,13 @@ import random
 #    return ''.join(random.choice(chars) for _ in range(size))
 
 from random import randint
+
+def process_form_results(form_results, class_instance):
+    print(form_results.items)
+
+    for key, value in form_results.iteritems():
+        setattr(class_instance, key, value)
+
 class Application(str):
     def __init__(self, str):
         self.instances = []

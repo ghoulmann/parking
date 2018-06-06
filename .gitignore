@@ -106,3 +106,4 @@ venv.bak/
 # mypy
 .mypy_cache/
 >>>>>>> c527d01d55799ce10ec55b3753c168f761229f4a
+sqlite/*.db

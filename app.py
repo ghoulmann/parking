@@ -24,6 +24,7 @@ from lot.lot import Lot
 from application.application import Application
 import sqlite3
 from flask import g
+from application.application import process_form_results
 
 DATABASE = 'sqlite/parking_app.db'
 def create_app(test_config=None):
@@ -119,9 +120,10 @@ def create_app(test_config=None):
             with open("data/output.json", "a") as record:
                 record.write(application + '\n\n')
             app_obj = Application(request.form['full_name'])
-            app_obj.id = complete['full_name']
-            app_obj.grade = complete['grade']
-            #app_obj.qualifier['internship'] = common['internship']
+            process_form_results(complete, app_obj)
+            #app_obj.id = complete['full_name']
+            #app_obj.grade = complete['grade']
+            #app_obj.qualifier['internship'] = #common['internship']
             return render_template('ack.html', object=app_obj)
         else:
             form = ApplicationForm()

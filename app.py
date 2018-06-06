@@ -22,6 +22,10 @@ from wtforms import *
 from wtforms.validators import DataRequired
 from lot.lot import Lot
 from application.application import Application
+import sqlite3
+from flask import g
+
+DATABASE = 'sqlite/parking_app.db'
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -40,7 +44,17 @@ def create_app(test_config=None):
     nav = Nav()
 
 
+    def get_db():
+        db = getattr(g, '_database', None)
+        if db is None:
+            db = g._database = sqlite3.connect(DATABASE)
+        return db
 
+    @app.teardown_appcontext
+    def close_connection(exception):
+        db = getattr(g, '_database', None)
+        if db is not None:
+            db.close()
 
 
     # registers the "top" menubar
@@ -82,7 +96,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def home():
-
+        cur = get_db().cursor()
         lot = Lot()
         return render_template('index.html', object=lot)
 
@@ -107,8 +121,7 @@ def create_app(test_config=None):
             app_obj = Application(request.form['full_name'])
             app_obj.id = complete['full_name']
             app_obj.grade = complete['grade']
-            app_obj.qualifier['internship'] = complete['internship']
-
+            #app_obj.qualifier['internship'] = common['internship']
             return render_template('ack.html', object=app_obj)
         else:
             form = ApplicationForm()
@@ -121,6 +134,9 @@ def create_app(test_config=None):
     nav.init_app(app)
 
     return app
+
+
+
 if __name__ == "__main__":
 
-    app.run
+    create_app()

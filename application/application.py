@@ -7,7 +7,7 @@ import random
 from random import randint
 
 def process_form_results(form_results, class_instance):
-    print(form_results.items)
+    
 
     for key, value in form_results.iteritems():
         setattr(class_instance, key, value)

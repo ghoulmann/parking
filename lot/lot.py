@@ -33,4 +33,4 @@ class Lot():
                 }
             }
 
-        return plot(self.fig, include_plotlyjs=True, output_type='div')
+        return plot(self.fig, include_plotlyjs=True, output_type='div', show_link=False)

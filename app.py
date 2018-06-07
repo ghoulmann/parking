@@ -64,10 +64,9 @@ def create_app(test_config=None):
         'Parking',
         View('Home', 'home'),
         View('Application', 'application'),
-        Subgroup(
-            'Admin'
-            #View('Wg240-Series', 'products', product='wg240'),
-            #View('Wg250-Series', 'products', product='wg250'),
+        Subgroup('Admin',
+            View('All Applications', 'view_applications'),
+            View('Settings and Configuration', 'settings'),
             #Separator(),
             #Label('Discontinued Products'),
             #View('Wg10X', 'products', product='wg10x'),
@@ -141,6 +140,14 @@ def create_app(test_config=None):
 
     nav.init_app(app)
 
+    @app.route('/admin/applications')
+    def view_applications():
+        with open('data/output.json') as data:
+            records = data.read()
+        return render_template('applications.html', records=records)
+    @app.route('/admin/settings')
+    def settings():
+        return render_template('settings.html')
     return app
 
 

@@ -26,7 +26,7 @@ import sqlite3
 from flask import g
 from application.application import process_form_results
 
-DATABASE = 'sqlite/parking_app.db'
+#DATABASE = 'sqlite/parking_app.db'
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
@@ -44,7 +44,7 @@ def create_app(test_config=None):
     Bootstrap(app)
     nav = Nav()
 
-
+    '''
     def get_db():
         db = getattr(g, '_database', None)
         if db is None:
@@ -56,7 +56,7 @@ def create_app(test_config=None):
         db = getattr(g, '_database', None)
         if db is not None:
             db.close()
-
+    '''
 
     # registers the "top" menubar
 
@@ -97,7 +97,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def home():
-        cur = get_db().cursor()
+        #cur = get_db().cursor()
         lot = Lot()
         return render_template('index.html', object=lot)
 
@@ -113,18 +113,24 @@ def create_app(test_config=None):
                         complete[key] = value
             now = unicode(datetime.datetime.now())
             complete['timestamp'] = now
-            application = json.dumps(complete)
+
             #print application
 
 
+
+            app_obj = Application(complete['full_name'])
+            process_form_results(complete, app_obj)
+            app_obj.id = complete['full_name']
+            app_obj.grade = complete['grade']
+            app_obj.multiply(app_obj.qualifier)
+            app_obj.expo_bloom(app_obj.qualifier, app_obj.raw_score)
+                        #print application
+
+            application = json.dumps(app_obj.__dict__)
             with open("data/output.json", "a") as record:
                 record.write(application + '\n\n')
-            app_obj = Application(request.form['full_name'])
-            process_form_results(complete, app_obj)
-            #app_obj.id = complete['full_name']
-            #app_obj.grade = complete['grade']
-            #app_obj.qualifier['internship'] = #common['internship']
-            return render_template('ack.html', object=app_obj)
+
+            return render_template('ack.html', result=complete, object=app_obj)
         else:
             form = ApplicationForm()
             return render_template('application_form.html', title="Application", form=form, wtf=wtf)

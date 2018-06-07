@@ -14,7 +14,7 @@ class Lot():
         self.lot = {'capacity': capacity, 'assignments': assigned,'available_spots': remaining}
         return lot
 
-    def donut(self, data, markers, title):
+    def donut(self, title='Usage (Percent)', data=[60,40], markers=['Available', 'Assigned']):
         """returns div"""
         import plotly
         import plotly.graph_objs as go
@@ -32,4 +32,4 @@ class Lot():
                 }
             }
 
-        return plot(fig, include_plotlyjs=True, output_type='div')
+        return plot(self.fig, include_plotlyjs=True, output_type='div')

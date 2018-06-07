@@ -7,10 +7,43 @@ import random
 from random import randint
 
 def process_form_results(form_results, class_instance):
-    
 
     for key, value in form_results.iteritems():
-        setattr(class_instance, key, value)
+
+        if value == 'y':
+
+            if key == 'internship':
+                class_instance.qualifier['internship'] = 1
+            if key == 'distance':
+                class_instance.qualifier['distance'] = 1
+            if key == 'attendance':
+                class_instance.qualifier['attendance'] = 1
+            if key == 'service':
+                class_instance.qualifier['service'] = 1
+            if key == 'athletics_carpool':
+                class_instance.qualifier['athletics_carpool'] = 1
+            if key == 'gpa':
+                class_instance.qualifier['gpa'] = 1
+            if key == 'd_enrollment':
+                class_instance.qualifier['d_enrollment'] = 1
+            if key == 'extracurricular':
+                class_instance.qualifier['extracurricular'] = 1
+            if key == 'weekday_job':
+                class_instance.qualifier['weekday_job'] = 1
+            if key == 'athletics':
+                class_instance.qualifier['athletics'] = 1
+            if key == 'athletics_captain':
+                class_instance.qualifier['athletics_captain'] = 1
+            if key == 'distance':
+                class_instance.qualifier['distance'] = 1
+            if key == 'sga':
+                class_instance.qualifier['sga'] = 1
+            if key == 'service':
+                class_instance.qualifier['service'] = 1
+            if key == 'media':
+                class_instance.qualifier['media'] = 1
+        #    pass
+        #setattr(class_instance, key, value)
 
 class Application(str):
     def __init__(self, str):
@@ -20,20 +53,20 @@ class Application(str):
         self.id = str.capitalize()
         self.name = self.id
         self.qualifier = {}
-        self.qualifier['hardship'] = randint(0,1)
-        self.qualifier['internship'] = randint(0,1)
-        self.qualifier['d_enrollment'] = randint(0,1)
-        self.qualifier['weekday_job'] = randint(0,1)
-        self.qualifier['distance'] = randint(0,1)
-        self.qualifier['athletics'] = randint(0,1)
-        self.qualifier['athletics_carpool'] = randint(0,1)
-        self.qualifier['athletics_captain'] = randint(0,1)
-        self.qualifier['sga'] = randint(0,1)
-        self.qualifier['extracurricular'] = randint(0,1)
-        self.qualifier['gpa'] = randint(0,1)
-        self.qualifier['attendance'] = randint(0,1)
-        self.qualifier['service'] = randint(0, 1)
-        self.insurance = True
+        self.qualifier['hardship'] = int(0)
+        self.qualifier['internship'] = int(0)
+        self.qualifier['d_enrollment'] = int(0)
+        self.qualifier['weekday_job'] = int(0)
+        self.qualifier['distance'] = int(0)
+        self.qualifier['athletics'] = int(0)
+        self.qualifier['athletics_carpool'] = int(0)
+        self.qualifier['athletics_captain'] = int(0)
+        self.qualifier['sga'] = int(0)
+        self.qualifier['extracurricular'] = int(0)
+        self.qualifier['gpa'] = int(0)
+        self.qualifier['attendance'] = int(0)
+        self.qualifier['service'] = int(0)
+        self.insurance = bool()
         self.licence_plate = randint(666, 777)
         self.plate_state = 'Maryland'
         self.car_make = ""
@@ -42,9 +75,19 @@ class Application(str):
         self.license = True
         self.registration = True
         self.parent_letter = True
-        self.raw_score = (sum(self.qualifier.values())) * 2
-        self.scaled_score = self.expo_bloom(self.qualifier, self.raw_score)
+
+        #if (sum(self.qualifier.values()) * 2) > 0:
+        #    self.raw_score = (sum(self.qualifier.values()))
+
+        #if self.raw_score:
+        #    self.scaled_score = self.expo_bloom(self.qualifier.items(), self.raw_score)
         self.instances.append(self)
+
+    def multiply(self, dictionary):
+        if (sum(dictionary.values()) * 2) > 0:
+            score = (sum(dictionary.values()) *2)
+            self.raw_score = score
+
     def expo_bloom(self, dictionary, multiplier):
         if dictionary['hardship']:
             self.scaled_score = multiplier ** 11
@@ -80,7 +123,7 @@ class Application(str):
 
         else:
 	        self.scaled_score = multiplier
-
+        #self.determiner = determiner
         return self.scaled_score
 
     #def id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):

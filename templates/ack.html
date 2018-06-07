@@ -17,9 +17,14 @@
     <div class="row">
       <div class="col-md-6">
         <p>{{ object.id }}</p>
+        <p>{{ object.raw_score }}</p>
         <p>{{ object.scaled_score }}</p>
-        <p>{{ object.determiner }}
+        <p>{{ object.determiner }}</p>
       </div>
+      <div class="col-md-6">
+
+          <p>{{ object.__dict__ }}</p>
+
     </div>
   </div>
 {% endblock %}

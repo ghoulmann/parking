@@ -2,10 +2,11 @@
 
 
 
+
 class Lot():
 
     def __init__(self):
-        self.CAPACITY = 75
+        CAPACITY = 75
 
 
     def lot_details(self, used, *season, **ay):
@@ -14,7 +15,7 @@ class Lot():
         self.lot = {'capacity': capacity, 'assignments': assigned,'available_spots': remaining}
         return lot
 
-    def donut(self, title='Usage (Percent)', data=[60,40], markers=['Available', 'Assigned']):
+    def donut(self, data, markers, title):
         """returns div"""
         import plotly
         import plotly.graph_objs as go

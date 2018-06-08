@@ -127,7 +127,7 @@ def create_app(test_config=None):
 
             application = json.dumps(app_obj.__dict__)
             with open("data/output.json", "a") as record:
-                record.write(application + '\n\n')
+                record.write('\n\n' + application)
 
             return render_template('ack.html', result=complete, object=app_obj)
         else:
@@ -148,11 +148,7 @@ def create_app(test_config=None):
             for record in records:
                 record = record.strip()
                 record = json.loads(record)
-                try:
-                    if record['email']:
-                        record = record
-                except:
-                    pass
+                
         return render_template('applications.html', records=records)
     @app.route('/admin/settings')
     def settings():

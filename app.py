@@ -144,6 +144,15 @@ def create_app(test_config=None):
     def view_applications():
         with open('data/output.json') as data:
             records = data.read()
+            records = records.split('\n\n')
+            for record in records:
+                record = record.strip()
+                record = json.loads(record)
+                try:
+                    if record['email']:
+                        record = record
+                except:
+                    pass
         return render_template('applications.html', records=records)
     @app.route('/admin/settings')
     def settings():

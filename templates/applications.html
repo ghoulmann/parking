@@ -4,8 +4,14 @@
 <div class='container'>
 <h1>View All Applications <small>Placeholder</small></h1>
 <table class="table table_hover">
-{{ records }}
+{% for record in records %}<tr>
+
+<td>{{ record }}</td>
+</tr>
+
+{% endfor %}
 </table>
+
 
 
 

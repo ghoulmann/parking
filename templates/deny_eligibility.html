@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block page_content %}
+<style type="text/css" media="print">
+.dontprint
+{ display: none; }
+</style>
+<div class="container">
+    <div class="jumbotron dontprint">
+        <h1>Thank You</h1>
+
+
+        <a class="btn btn-primary" type="button" href="/">Home</a>
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <p>Unfortunately, you are not eligible for a permit at this time.</p>
+        <p>Please try again when can provide confirmation of the following:</p>
+        <ul>
+            <li>Car Registration</li>
+            <li>License Plate Info</li>
+            <li>Driver's License</li>
+            <li>Proof of Insurance</li>
+        </ul>
+        <p>Finally, note that permits are only available for current seniors.</p>
+      </div>
+      </div>
+  </div>
+{% endblock %}
+{% endblock %}

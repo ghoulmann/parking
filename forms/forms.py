@@ -15,6 +15,22 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+class Eligibility(FlaskForm):
+    #v_make = StringField('Vehicle Make')
+    #v_model = StringField('Vehicle Model')
+    #v_year = StringField('Vehicle Year')
+    full_name = StringField('Full Name', validators=[validators.DataRequired()])
+    email = more_fields.EmailField('Email Address', validators=[validators.DataRequired(), validators.Email()])
+    registration = BooleanField('Registration')
+    consent = BooleanField('Parent/Guardian Written Consent')
+    license = BooleanField('Licensed Driver')
+    insurance = BooleanField('Insured')
+    l_plate = StringField('License Plate', validators=[validators.DataRequired()])
+    state = StringField('Registration State')
+    grade = SelectField(choices=[(12, '12th'), (11, '11th'), (10,'10th'),  (9,'9th') ])
+    submit = SubmitField('Submit')
+
+
 class ApplicationForm(FlaskForm):
 
 
@@ -29,7 +45,7 @@ class ApplicationForm(FlaskForm):
     l_plate = StringField('License Plate')
     state = BooleanField('Registration State')
     consent = BooleanField('Parent/Guardian Written Consent')
-    grade = SelectField(choices=[(9,'9th'), (10,'10th'), (11, '11th'), (12, '12th')])
+    grade = SelectField(choices=[(12, '12th'), (11, '11th'), (10,'10th'),  (9,'9th') ])
 
     # vehicle
     make = StringField('Vehicle Manufacturer')

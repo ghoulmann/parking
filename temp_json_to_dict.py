@@ -22,4 +22,6 @@ json_data = {}
 json_data = []
 for p in pile:
     json_data.append(json.loads(p))
-type(json_data[0])
+
+from operator import itemgetter
+sorted_applications = sorted(json_data, key=itemgetter('scaled_score'), reverse=True)

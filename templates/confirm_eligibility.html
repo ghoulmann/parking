@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% block page_content %}
+<style type="text/css" media="print">
+.dontprint
+{ display: none; }
+</style>
+<div class="container">
+    <div class="jumbotron dontprint">
+        <h1>Eligibility Confirmed!</h1>
+        <a class="btn btn-primary" type="button" href="/">Home</a>
+    </div>
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+
+        <p>{{ object.__dict__ }}</p>
+      </div>
+      <div class="col-md-6">
+
+          <p>Apply Now?</p>
+          <a type='button' href="{{ url_for('application', object=object) }}" class="btn btn-primary">Apply</a>
+
+    </div>
+  </div>
+{% endblock %}
+{% endblock %}

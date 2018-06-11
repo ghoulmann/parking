@@ -1,6 +1,7 @@
 import string
 import random
 
+
 #def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 #    return ''.join(random.choice(chars) for _ in range(size))
 
@@ -28,8 +29,6 @@ def process_form_results(form_results, class_instance):
                 class_instance.qualifier['d_enrollment'] = 1
             if key == 'extracurricular':
                 class_instance.qualifier['extracurricular'] = 1
-            if key == 'weekday_job':
-                class_instance.qualifier['weekday_job'] = 1
             if key == 'athletics':
                 class_instance.qualifier['athletics'] = 1
             if key == 'athletics_captain':
@@ -42,39 +41,65 @@ def process_form_results(form_results, class_instance):
                 class_instance.qualifier['service'] = 1
             if key == 'media':
                 class_instance.qualifier['media'] = 1
+            if key == 'job':
+                class_instance.qualifier['weekday_job'] = 1
+            if key == 'parent_letter':
+                class_instance.parent_letter = 1
+            if key == 'insurance':
+                class_instance.insurance = 1
+            if key == 'license':
+                class_instance.license = 1
+            if key == 'registration':
+                class_instance.registration = 1
+
+        class_instance.full_name = form_results['full_name']
+        class_instance.student_id = form_results['student_id']
+        class_instance.email = form_results['email']
+        class_instance.license_plate = form_results['l_plate']
+        class_instance.state = form_results['state']
+        #class_instance.grade = form_results['grade']
+        class_instance.make = form_results['make']
+        class_instance.model = form_results['model']
+        class_instance.year = form_results['year']
+        class_instance.narrative = form_results['narrative']
+
+
         #    pass
         #setattr(class_instance, key, value)
 
 class Application(str):
     def __init__(self, str):
         self.instances = []
-        self.grade = randint(9, 12)
-        #self.id = self.id_generator(self)
-        self.id = str.capitalize()
-        self.name = self.id
+        #self.grade = False
         self.qualifier = {}
-        self.qualifier['hardship'] = int(0)
-        self.qualifier['internship'] = int(0)
-        self.qualifier['d_enrollment'] = int(0)
-        self.qualifier['weekday_job'] = int(0)
-        self.qualifier['distance'] = int(0)
-        self.qualifier['athletics'] = int(0)
-        self.qualifier['athletics_carpool'] = int(0)
-        self.qualifier['athletics_captain'] = int(0)
-        self.qualifier['sga'] = int(0)
-        self.qualifier['extracurricular'] = int(0)
-        self.qualifier['gpa'] = int(0)
-        self.qualifier['attendance'] = int(0)
-        self.qualifier['service'] = int(0)
+        #self.id = self.id_generator(self)
+        self.id = ""
+        self.name = self.id.title()
+        self.full_name = ""
+        self.qualifier['hardship'] = bool()
+        self.qualifier['internship'] = bool()
+        self.qualifier['d_enrollment'] = bool()
+        self.qualifier['weekday_job'] = bool()
+        self.qualifier['distance'] = bool()
+        self.qualifier['athletics'] = bool()
+        self.qualifier['athletics_carpool'] = bool()
+        self.qualifier['athletics_captain'] = bool()
+        self.qualifier['sga'] = bool()
+        self.qualifier['extracurricular'] = bool()
+        self.qualifier['gpa'] = bool()
+        self.qualifier['attendance'] = bool()
+        self.qualifier['service'] = bool()
         self.insurance = bool()
-        self.licence_plate = randint(666, 777)
-        self.plate_state = 'Maryland'
+        self.license = bool()
+        self.registration = bool()
+        self.parent_letter = bool()
+        self.license_plate = ""
+        self.plate_state = ""
         self.car_make = ""
         self.car_model = ""
         self.car_year = ""
-        self.license = True
-        self.registration = True
-        self.parent_letter = True
+        self.email = ""
+        self.narrative = ''
 
         #if (sum(self.qualifier.values()) * 2) > 0:
         #    self.raw_score = (sum(self.qualifier.values()))
@@ -125,6 +150,7 @@ class Application(str):
 	        self.scaled_score = multiplier
         #self.determiner = determiner
         return self.scaled_score
+
 
     #def id_generator(self, size=6, chars=string.ascii_uppercase + string.digits):
     #     return ''.join(random.choice(chars) for _ in range(size))

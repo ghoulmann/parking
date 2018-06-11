@@ -3,6 +3,9 @@ import datetime
 import json
 import os
 import time
+import csv
+
+from operator import attrgetter
 
 
 import wtforms as wtf
@@ -37,7 +40,11 @@ csrf.init_app(app)
 
 Bootstrap(app)
 nav = Nav()
-
+app_path = os.path.dirname(os.path.realpath(__file__))
+global app_path
+global data_path
+data_path = app_path + '/data/output.json'
+print data_path
 
 # registers the "top" menubar
 
@@ -67,7 +74,8 @@ def home():
     #cur = get_db().cursor()
     lot = Lot()
     return render_template('index.html', object=lot)
-@app.route('/eligibility', methods=['GET', 'POST'])
+'''
+app.route('/eligibility', methods=['GET', 'POST'])
 def determine_elig():
     complete = {}
     if request.method == 'POST':
@@ -78,7 +86,7 @@ def determine_elig():
                 if key != 'submit':
                     complete[key] = value
         now = unicode(datetime.datetime.now())
-        app_obj = Application(complete['full_name'])
+        app_obj = Application('current')
         process_form_results(complete, app_obj)
 
         complete['timestamp'] = now
@@ -105,33 +113,42 @@ def determine_elig():
 @app.route('/deny', methods=['GET'])
 def deny_eligibility():
     return render_template('deny_eligibility.html', title="Eligibility Determined")
+'''
 @app.route('/application', methods=['GET', 'POST'])
 def application():
     complete = {}
+
     if request.method == 'POST':
-        result = request.form
+        result = request.form.to_dict()
+        #complete = result
         for key, value in result.items():
             if key != 'csrf_token':
                 if key != 'submit':
-                    complete[key] = value
+                    result[key] = value
         now = unicode(datetime.datetime.now())
-        complete['timestamp'] = now
+        #result['timestamp'] = now
 
-
-        #print application
-
-
-
-        app_obj = Application(complete['full_name'])
-        process_form_results(complete, app_obj)
-        app_obj.id = complete['full_name']
-        app_obj.grade = complete['grade']
+        app_obj = Application(result['full_name'])
+        process_form_results(result, app_obj)
+        #app_obj.name = complete['full_name']
+        #app_obj.licence_plate = complete['l_plate']
+        #app_obj.plate_state = complete['state']
+        #app_obj.grade = complete['grade']
         app_obj.multiply(app_obj.qualifier)
         app_obj.expo_bloom(app_obj.qualifier, app_obj.raw_score)
         #print application
 
+        '''
+        length = len(app_obj.__dict__)
+        with open(app_path + '/data/output.csv', 'wb') as test_file:
+            csv_writer = csv.writer(test_file, delimiter=',')
+            for y in range(length):
+                line = flatten(app_obj.__dict__)
+                csv_writer.writerow([x for x in line])
+        #write_csv((app_path + '/data/output.csv'), app_obj.__dict__)
+        '''
         application = json.dumps(app_obj.__dict__)
-        with open("/home/ghoulmann/parking_app/data/output.json", 'a+') as record:
+        with open(data_path, 'a+') as record:
             prior = record.read()
             if prior:
                 record.write('\n\n' + application)
@@ -151,7 +168,7 @@ nav.init_app(app)
 
 @app.route('/admin/applications')
 def view_applications():
-    with open('/home/ghoulmann/parking_app/data/output.json') as data:
+    with open(data_path) as data:
         records = data.read()
         records = records.split('\n\n')
         for record in records:
@@ -162,8 +179,47 @@ def view_applications():
 @app.route('/admin/settings')
 def settings():
     return render_template('settings.html')
+'''
+def write_csv(csvfile, fields):
+    with open(csvfile, 'a+') as datafile:
+        writer = csv.writer(datafile, quoting=csv.QUOTE_ALL)
+        row_headers = fields.keys()
+        writer.writerow(row_headers)
+        for header in row_headers:
 
 
+
+            row = [attrgetter(fields[header]) (fields) for header in row_headers]
+            for count, column in enumerate(row):
+
+                if callable(column):
+                    row[count] = column()
+                if type(column) is unicode:
+                    row[count] = column.encode('utf-8')
+
+                if type(column) is int:
+                    row[count] is column()
+                if type(column) is str:
+                    row(column) is column()
+                if type(column) is float:
+                    row(column) is column()
+
+                writer.writerow(row)
+'''
+
+'''
+def flatten(attributes):
+
+    ret = []
+    for i in attributes:
+        if isinstance(i, list) or isinstance(i, tuple):
+            ret.extend(flatten(i))
+        elif isinstance(i, dict):
+            ret.extend(flatten(i.items()))
+        else:
+            ret.append(i)
+    print ret
+'''
 
 
 if __name__ == "__main__":

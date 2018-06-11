@@ -28,6 +28,7 @@ from application.application import Application
 import sqlite3
 from flask import g
 from application.application import process_form_results
+from process.process import json_dict_list
 
 #DATABASE = 'sqlite/parking_app.db'
 
@@ -168,12 +169,7 @@ nav.init_app(app)
 
 @app.route('/admin/applications')
 def view_applications():
-    with open(data_path) as data:
-        records = data.read()
-        records = records.split('\n\n')
-        for record in records:
-            record = record.strip()
-            record = json.loads(record)
+    records = json_dict_list(data_path)
 
     return render_template('applications.html', records=records)
 @app.route('/admin/settings')

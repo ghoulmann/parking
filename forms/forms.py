@@ -1,11 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField, TextAreaField
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField, TextAreaField
 from wtforms import validators
 from wtforms.fields import html5 as more_fields
 from wtforms.widgets import TextArea
 from wtforms.widgets import HiddenInput
 
 
+class LotConfigForm(FlaskForm):
+    lot_capacity = IntegerField('Lot Capacity', validators=[validators.DataRequired()])
 
 
 

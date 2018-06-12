@@ -45,17 +45,19 @@ app_path = os.path.dirname(os.path.realpath(__file__))
 global app_path
 global data_path
 data_path = app_path + '/data/output.json'
-print data_path
+#print data_path
 
 # registers the "top" menubar
 
 nav.register_element('top', Navbar(
     'Parking',
     View('Home', 'home'),
-    View('Application', 'application'),
+    View('Apply for Permit', 'application'),
+    View('Hardship Request', 'hardship_app'),
     Subgroup('Admin',
         View('All Applications', 'view_applications'),
         View('Settings and Configuration', 'settings'),
+	View('Create Hardship Permit', 'hardship_admin')
         #Separator(),
         #Label('Discontinued Products'),
         #View('Wg10X', 'products', product='wg10x'),
@@ -66,8 +68,13 @@ nav.register_element('top', Navbar(
 
 
 
+@app.route('/admin/hardship_app', methods=['GET', 'POST'])
+def hardship_admin():
+    return render_template('hardship_admin.html')
+@app.route('/hardship', methods=['GET', 'POST'])
+def hardship_app():
 
-
+    return render_template('hardship_form.html')
 
 
 @app.route('/')
@@ -174,7 +181,8 @@ def view_applications():
     return render_template('applications.html', records=records)
 @app.route('/admin/settings')
 def settings():
-    return render_template('settings.html')
+    form = LotConfigForm()
+    return render_template('settings.html', form=form, wtf=wtf)
 '''
 def write_csv(csvfile, fields):
     with open(csvfile, 'a+') as datafile:

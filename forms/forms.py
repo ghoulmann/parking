@@ -7,7 +7,8 @@ from wtforms.widgets import HiddenInput
 
 
 class LotConfigForm(FlaskForm):
-    lot_capacity = IntegerField('Lot Capacity', validators=[validators.DataRequired()])
+    lot_capacity = IntegerField('Lot Capacity', validators=[validators.DataRequired()], default=75)
+    submit = SubmitField('Submit')
 
 
 

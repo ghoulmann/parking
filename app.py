@@ -20,7 +20,7 @@ from flask_nav import Nav
 from flask_nav.elements import Link, Navbar, Separator, Subgroup, Text, View
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from forms.forms import ApplicationForm, Eligibility
+from forms.forms import ApplicationForm, Eligibility, LotConfigForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from lot.lot import Lot

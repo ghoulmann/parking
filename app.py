@@ -20,7 +20,7 @@ from flask_nav import Nav
 from flask_nav.elements import Link, Navbar, Separator, Subgroup, Text, View
 from flask_wtf import FlaskForm
 from flask_wtf.csrf import CSRFProtect
-from forms.forms import ApplicationForm, Eligibility
+from forms.forms import ApplicationForm, Eligibility, LotConfigForm
 from wtforms import *
 from wtforms.validators import DataRequired
 from lot.lot import Lot
@@ -29,6 +29,9 @@ import sqlite3
 from flask import g
 from application.application import process_form_results
 from process.process import json_dict_list
+import sqlalchemy
+
+
 
 #DATABASE = 'sqlite/parking_app.db'
 
@@ -45,6 +48,8 @@ app_path = os.path.dirname(os.path.realpath(__file__))
 global app_path
 global data_path
 data_path = app_path + '/data/output.json'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/ghoulmann/parking_app/data/parking.db'
+#db = SQLAlchemy(app)
 #print data_path
 
 # registers the "top" menubar

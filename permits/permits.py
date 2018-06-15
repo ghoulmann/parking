@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import string
 import random
 import copy
@@ -33,14 +32,7 @@ def bulk_create(total=75):
 def id_generator(size=6, chars=string.ascii_lowercase + string.digits):
         return ''.join(random.choice(chars) for _ in range(size))
 
-class Permit(object):
-    def __init__(self, id):
-	    self.serial = id
-	    self.assigned_to = ""
-	    self.season = "Autumn"
-	    self.ay = "2018-2019"
-	    self.lot = "Student Lot"
-	    self.status = "not issued"
+
 
 
 import time
@@ -61,7 +53,7 @@ def bulk_permit_gen(count=75):
 
 
 
-class Permit():
+class Permit(object):
     def __init__(self, id):
         setattr(self, self.permit_id, id)
         self.permit_id = ''
@@ -70,4 +62,3 @@ class Permit():
         self.permit_issued = str('')
         self.issue_season = str('')
         self.created = time.strftime("%c")
-

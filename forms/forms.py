@@ -1,11 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, DateTimeField, SelectField, TextAreaField
 from wtforms import validators
 from wtforms.fields import html5 as more_fields
 from wtforms.widgets import TextArea
 from wtforms.widgets import HiddenInput
 
 
+class LotConfigForm(FlaskForm):
+    lot_capacity = IntegerField('Lot Capacity', validators=[validators.DataRequired()], default=75)
+    submit = SubmitField('Submit')
 
 
 
@@ -15,26 +18,49 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+class Eligibility(FlaskForm):
+    #v_make = StringField('Vehicle Make')
+    #v_model = StringField('Vehicle Model')
+    #v_year = StringField('Vehicle Year')
+    full_name = StringField('Full Name', validators=[validators.DataRequired()])
+    email = more_fields.EmailField('Email Address', validators=[validators.DataRequired(), validators.Email()])
+    registration = BooleanField('Registration')
+    consent = BooleanField('Parent/Guardian Written Consent')
+    license = BooleanField('Licensed Driver')
+    insurance = BooleanField('Insured')
+    l_plate = StringField('License Plate', validators=[validators.DataRequired()])
+    state = StringField('Registration State')
+    grade = SelectField(choices=[(12, '12th'), (11, '11th'), (10,'10th'),  (9,'9th') ])
+    submit = SubmitField('Submit')
+
+
 class ApplicationForm(FlaskForm):
 
 
-    #identity
-    full_name = StringField('Full Name', validators=[validators.DataRequired()])
 
-    email = more_fields.EmailField('Email Address', validators=[validators.DataRequired(), validators.Email()])
+
+    #identity
+    full_name = StringField('Full Name', validators=[validators.DataRequired()], render_kw={'class': 'form-control'})
+    student_id = StringField('Student ID Number', validators=[validators.DataRequired()], render_kw={'class': 'form-control'})
+
+    email = more_fields.EmailField('School Email Address', validators=[validators.DataRequired(), validators.Email()], render_kw={'class': 'form-control'})
+
+    key = StringField('',widget=HiddenInput())
 
     # Requirements
+    registration = BooleanField('Registration')
     license = BooleanField('Licensed Driver')
     insurance = BooleanField('Insured')
+    parent_letter = BooleanField('Parent/Guardian Written Consent')
+
     l_plate = StringField('License Plate')
-    state = BooleanField('Registration State')
-    consent = BooleanField('Parent/Guardian Written Consent')
-    grade = SelectField(choices=[(9,'9th'), (10,'10th'), (11, '11th'), (12, '12th')])
+    state = StringField('Registration State')
+    grade = SelectField(choices=[(12, '12th'), (11, '11th'), (10,'10th'),  (9,'9th') ], render_kw={'class': 'form-control'})
 
     # vehicle
-    make = StringField('Vehicle Manufacturer')
-    model = StringField('Model')
-    year = StringField('Vehicle Year')
+    make = StringField('Vehicle Manufacturer', render_kw={'class': 'form-control'})
+    model = StringField('Model', render_kw={'class': 'form-control'})
+    year = StringField('Vehicle Year', render_kw={'class': 'form-control'})
 
     # eligibility
     internship = BooleanField('Internship')
@@ -49,10 +75,9 @@ class ApplicationForm(FlaskForm):
     media_production = BooleanField('Media Production')
     gpa = BooleanField('GPA Advantage')
     distance = BooleanField('Prohibitive Commute')
-    weekday_job = BooleanField('weekday_job')
     attendance = BooleanField('Attendance Advantage')
-    narrative = StringField('Explanation', widget=TextArea(), validators=[validators.DataRequired()])
-    timestamp = DateTimeField('',widget=HiddenInput())
+    narrative = TextAreaField('Please provide details to support your request for a parking permit', validators=[validators.DataRequired(), validators.length(max=750)], render_kw={'class': 'form-control', 'rows': 15})
+
 
 
 
